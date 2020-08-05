@@ -26,18 +26,17 @@ document.addEventListener('keydown', (event) => {
 });
 
 // anchors change color
-let anchors = document.querySelector("nav")["childNodes"];
-console.log("anchors", anchors)
 
+console.log("anchors", anchors)
 function changeColor (el, color, time){
     return setInterval(el => el.style.background = color, time, el);
 }
 function changeText (el, color, time){
     return setInterval(el => el.style.color = color, time, el);
 }
+let anchors = document.querySelector("nav")["childNodes"];
+console.log(document.querySelector("nav")["childNodes"]);
 
-let idArr = [];
-console.log("idArr", idArr)
 let [,home,, about,, blog,, contact,] = anchors;
 let anchorstest = [home, about, blog, contact];
 console.log("anchorstest", anchorstest)
@@ -50,8 +49,6 @@ for(let el of anchorstest) {
         console.log("5","Anchor focusevent", event);
         clearInterval();
 })}
-console.log("idArr", idArr);
-console.log(document.querySelector("nav")["childNodes"]);
 
 // mousedown to shrink and push the bus right
 let imageOne = document.querySelector(".intro").firstElementChild;
@@ -105,3 +102,23 @@ textContH2.addEventListener('copy', (event) =>{
     })
     
 })
+
+// event propagation stopped by eventListener on btnOne
+let btn = document.getElementsByClassName("btn");
+let [btnOne, btnTwo, btnThree] = btn;
+let funSun = document.querySelector('.destination');
+funSun.addEventListener('click', (event) => {
+    funSun.style.color = 'white';
+    funSun.style.background = 'black';
+    console.log("eventPropagation victim", event)
+})
+btnOne.addEventListener('click', (event) => {
+    btnOne.style.color = 'orange';
+    btnOne.style.background = 'purple';
+    event.stopPropagation("eventPropagation Hero", event);
+})
+
+//change default behaviour of anchor links
+for (let el of anchorstest){
+    el.addEventListener('click', event => event.preventDefault());
+}
